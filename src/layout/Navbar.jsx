@@ -33,6 +33,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const currencyList = ["USD", "INR", "EUR"];
+const currencySymbols = {
+  USD: "$",
+  INR: "₹",
+  EUR: "€",
+};
 
 const Navbar = () => {
   const classes = useStyles();
@@ -44,7 +49,12 @@ const Navbar = () => {
   const currencyChangeHandler = (e) => {
     const currency = e.target.value;
     console.log(currency);
-    dispatch(currencyActions.changeCurrency(currency));
+    dispatch(
+      currencyActions.changeCurrency({
+        value: currency,
+        symbol: currencySymbols[currency],
+      })
+    );
   };
 
   return (
