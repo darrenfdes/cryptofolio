@@ -8,10 +8,11 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import React from "react";
 import Notification from "@material-ui/icons/Notifications";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
 import Avatar from "@material-ui/core/Avatar";
+import { useDispatch, useSelector } from "react-redux";
+import { currencyActions } from "../redux-store/currency-slice";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -31,8 +32,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const currencyList = ["USD", "INR", "EUR"];
+
 const Navbar = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const currencyStore = useSelector((state) => state.currency.value);
+
+  console.log(typeof currencyStore);
+  const currencyChangeHandler = (e) => {
+    const currency = e.target.value;
+    console.log(currency);
+    dispatch(currencyActions.changeCurrency(currency));
+  };
+
   return (
     <AppBar position="static">
       <Container>
@@ -40,11 +54,20 @@ const Navbar = () => {
           <Typography variant="h6" className={classes.title}>
             CryptoFolio
           </Typography>
-          <div>
-            <Select>
-              <MenuItem>USD</MenuItem>
-              <MenuItem>INR</MenuItem>
-              <MenuItem>EUR</MenuItem>
+          <div style={{ display: "flex" }}>
+            <Select
+              color="primary"
+              variant="outlined"
+              labelId="demo-simple-select-label"
+              value={currencyStore}
+              style={{ width: 100, height: 40, marginLeft: 15, color: "white" }}
+              onChange={currencyChangeHandler}
+            >
+              {currencyList.map((currency) => (
+                <MenuItem key={currency} value={currency}>
+                  {currency}
+                </MenuItem>
+              ))}
             </Select>
             <div className={classes.icons}>
               <Badge
