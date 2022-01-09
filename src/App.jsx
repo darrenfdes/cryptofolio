@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Container, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import "./App.css";
 import Navbar from "./layout/Navbar";
 import Homepage from "./pages/Homepage";
@@ -31,14 +31,12 @@ const App = () => {
     <div className={classes.app}>
       <Navbar />
       <div className={classes.main}>
-        <Container>
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/crypto" element={<Cryptocurrency />} />
-            <Route path="/crypto/:coinId" element={<CryptoDetails />} />
-            <Route path="/news" element={<News />} />
-          </Routes>
-        </Container>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/crypto" element={<Cryptocurrency />} />
+          <Route path="/crypto/:coinId" element={<CryptoDetails />} />
+          <Route path="/news" element={<News />} />
+        </Routes>
       </div>
     </div>
   );

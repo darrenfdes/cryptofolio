@@ -45,10 +45,8 @@ const Navbar = () => {
 
   const currencyStore = useSelector((state) => state.currency.value);
 
-  console.log(typeof currencyStore);
   const currencyChangeHandler = (e) => {
     const currency = e.target.value;
-    console.log(currency);
     dispatch(
       currencyActions.changeCurrency({
         value: currency,
