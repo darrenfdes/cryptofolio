@@ -32,11 +32,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const currencyList = ["USD", "INR", "EUR"];
+const currencyList = ["USD", "INR", "EUR", "BTC"];
 const currencySymbols = {
   USD: "$",
   INR: "₹",
   EUR: "€",
+  BTC: "₿",
 };
 
 const Navbar = () => {

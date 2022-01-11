@@ -11,5 +11,9 @@ export const getCoinList = (currency) =>
     )
     .then((res) => res.data);
 
-export const getTrendingCoins = () =>
-  api.get("/search/trending").then((res) => res.data);
+export const getTrendingCoins = (currency = "usd") =>
+  api
+    .get(
+      `/coins/markets?vs_currency=${currency}&order=gecko_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h`
+    )
+    .then((res) => res.data);
