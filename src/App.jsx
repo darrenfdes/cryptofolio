@@ -7,6 +7,7 @@ import Homepage from "./pages/Homepage";
 import Cryptocurrency from "./pages/Cryptocurrency";
 import CryptoDetails from "./pages/CryptoDetails";
 import News from "./pages/News";
+import Ribbon from "./components/Ribbon/Ribbon";
 
 const useStyles = makeStyles((theme) => ({
   app: {
@@ -27,9 +28,11 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
   const classes = useStyles();
+  console.log("re-render *app.jsx*");
   return (
     <div className={classes.app}>
       <Navbar />
+
       <div className={classes.main}>
         <Routes>
           <Route path="/" element={<Homepage />} />

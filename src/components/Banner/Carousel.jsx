@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Card,
-  CardHeader,
   CardContent,
   CardMedia,
   makeStyles,
@@ -9,8 +8,6 @@ import {
 } from "@material-ui/core";
 import { fetchNews } from "../../apis/newsApi";
 import { useQuery } from "react-query";
-import { getTrendingCoins } from "../../apis/coinGecko";
-import { useSelector } from "react-redux";
 import AliceCarousel from "react-alice-carousel";
 // import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 // import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
@@ -42,20 +39,6 @@ const demoImage =
 const Carousel = () => {
   const classes = useStyles();
 
-  const currencyStore = useSelector((state) => state.currency.value);
-
-  const currency = currencyStore.toLowerCase();
-  console.log(currency);
-
-  const {
-    data: trendingCoins,
-    isLoading,
-    isError,
-    error,
-  } = useQuery(["trendingCoins", currency], () => getTrendingCoins(currency), {
-    enabled: Boolean(currency),
-  });
-
   const searchTerm = "blockchain technology";
 
   const {
@@ -65,7 +48,7 @@ const Carousel = () => {
     error: errorNews,
   } = useQuery(["news", searchTerm], () => fetchNews(searchTerm));
 
-  if (isLoadingNews && isLoading) {
+  if (isLoadingNews) {
     return "Fetching Data";
   }
 
@@ -73,22 +56,23 @@ const Carousel = () => {
     return errorNews.message;
   }
 
-  if (isError) {
-    return error.message;
-  }
-
   const articles = news?.articles;
 
   const items = articles?.map((x) => {
     return (
-      <>
-        <Card className={classes.root}>
-          <CardMedia
-            className={classes.media}
-            alt={x.title}
-            image={x.urlToImage ? x.urlToImage : demoImage}
-            title={x.title}
-          />
+      <Card className={classes.root} key={x.title}>
+        <CardMedia
+          className={classes.media}
+          alt={x.title}
+          image={x.urlToImage ? x.urlToImage : demoImage}
+          title={x.title}
+        />
+        <a
+          href={x?.url}
+          target="_blank"
+          rel="noreferrer"
+          style={{ color: "inherit" }}
+        >
           <CardContent>
             <Typography
               variant="body2"
@@ -98,8 +82,8 @@ const Carousel = () => {
               {x.title}
             </Typography>
           </CardContent>
-        </Card>
-      </>
+        </a>
+      </Card>
     );
   });
 
