@@ -1,8 +1,9 @@
 import React from "react";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { Link, makeStyles, Typography } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   link: {
@@ -44,33 +45,35 @@ const CoinTicker = ({ coins }) => {
   return (
     <div style={{ display: "flex" }}>
       {coins.map((coin) => (
-        <Link
-          className={classes.link}
-          to={`/crypto/${coin.id}`}
-          style={{ textDecoration: "none" }}
-        >
-          <div className={classes.ticker} key={coin.id}>
-            <img src={coin.image} alt={coin.id} className={classes.image} />
-            <Typography variant="subtitle2">{coin.symbol}</Typography>
-            <span
-              className={
-                coin.price_change_percentage_24h >= 0
-                  ? classes.priceRise
-                  : classes.priceDrop
-              }
-            >
-              <Typography variant="subtitle2">
-                {coin.price_change_percentage_24h?.toFixed(2)}
-              </Typography>
-              %
-              {coin.price_change_percentage_24h >= 0 ? (
-                <ArrowDropUpIcon />
-              ) : (
-                <ArrowDropDown />
-              )}
-            </span>
-          </div>
-        </Link>
+        <>
+          <Link
+            className={classes.link}
+            to={`/crypto/${coin.id}`}
+            style={{ textDecoration: "none" }}
+          >
+            <div className={classes.ticker} key={coin.id}>
+              <img src={coin.image} alt={coin.id} className={classes.image} />
+              <Typography variant="subtitle2">{coin.symbol}</Typography>
+              <span
+                className={
+                  coin.price_change_percentage_24h >= 0
+                    ? classes.priceRise
+                    : classes.priceDrop
+                }
+              >
+                <Typography variant="subtitle2">
+                  {coin.price_change_percentage_24h?.toFixed(2)}
+                </Typography>
+                %
+                {coin.price_change_percentage_24h >= 0 ? (
+                  <ArrowDropUpIcon />
+                ) : (
+                  <ArrowDropDown />
+                )}
+              </span>
+            </div>
+          </Link>
+        </>
       ))}
     </div>
   );
