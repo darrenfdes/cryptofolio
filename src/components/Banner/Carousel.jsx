@@ -3,6 +3,7 @@ import {
   Card,
   CardContent,
   CardMedia,
+  CircularProgress,
   makeStyles,
   Typography,
 } from "@material-ui/core";
@@ -31,6 +32,12 @@ const useStyles = makeStyles((theme) => ({
       height: 120,
     },
   },
+  next: {
+    float: "right",
+  },
+  prev: {
+    float: "left",
+  },
 }));
 
 const demoImage =
@@ -49,7 +56,17 @@ const Carousel = () => {
   } = useQuery(["news", searchTerm], () => fetchNews(searchTerm));
 
   if (isLoadingNews) {
-    return "Fetching Data";
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress color="secondary" />
+      </div>
+    );
   }
 
   if (isErrorNews) {
@@ -91,7 +108,7 @@ const Carousel = () => {
     0: {
       items: 2,
     },
-    512: {
+    620: {
       items: 3,
     },
     1024: {
@@ -102,17 +119,18 @@ const Carousel = () => {
   return (
     <div className={classes.carousel}>
       <AliceCarousel
+        className={classes.alice}
         mouseTracking
         infinite
         responsive={responsive}
         items={items}
         autoPlay
-        autoPlayInterval={30000}
+        autoPlayInterval={60000}
         animationDuration={1500}
         disableDotsControls
         disableButtonsControls
-        // renderNextButton={() => <NavigateNextIcon />}
-        // renderPrevButton={() => <NavigateBeforeIcon />}
+        // renderNextButton={() => <NavigateNextIcon className={classes.next} />}
+        // renderPrevButton={() => <NavigateBeforeIcon className={classes.prev} />}
       />
     </div>
   );

@@ -18,11 +18,11 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
   },
 
-  main: {
-    [theme.breakpoints.down("sm")]: {
-      paddingLeft: "74px",
-    },
-  },
+  // main: {
+  //   [theme.breakpoints.down("sm")]: {
+  //     paddingLeft: "74px",
+  //   },
+  // },
 }));
 
 const App = () => {
