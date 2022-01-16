@@ -77,7 +77,7 @@ const CoinTable = () => {
 
   const [search, setSearch] = useState("");
 
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
 
   let navigate = useNavigate();
 
@@ -141,7 +141,7 @@ const CoinTable = () => {
           >
             {globalStats?.market_cap_change_percentage_24h_usd.toFixed(2)}%
           </span>{" "}
-          increase over the last day
+          increase over the last 24h
         </Typography>
         <Switch
           size="small"
@@ -153,7 +153,11 @@ const CoinTable = () => {
           Show Stats
         </Typography>
       </span>
-      {checked && <Statcards stats={globalStats} />}
+      {checked && (
+        <span style={{ paddingBottom: "15px", paddingTop: "15px" }}>
+          <Statcards stats={globalStats} />
+        </span>
+      )}
       <TextField
         label="Search for a cryptocurrency"
         variant="outlined"

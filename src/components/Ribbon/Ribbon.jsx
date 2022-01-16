@@ -1,7 +1,6 @@
 import React from "react";
 import Ticker from "react-ticker";
 import CoinTicker from "./CoinTicker";
-import { useSelector } from "react-redux";
 import { useQuery } from "react-query";
 import { getTrendingCoins } from "../../apis/coinGecko";
 import { LinearProgress } from "@material-ui/core";

@@ -1,5 +1,6 @@
 import React from "react";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
+// eslint-disable-next-line no-unused-vars
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { makeStyles, Typography } from "@material-ui/core";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
@@ -36,8 +37,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CoinTicker = ({ coins }) => {
-  console.log("re-render coin ticker");
-
   const classes = useStyles();
 
   // console.log(coins[0]);
