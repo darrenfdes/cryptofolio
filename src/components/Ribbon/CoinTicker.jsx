@@ -48,8 +48,9 @@ const CoinTicker = ({ coins }) => {
           className={classes.link}
           to={`/crypto/${coin.id}`}
           style={{ textDecoration: "none" }}
+          key={coin.id}
         >
-          <div className={classes.ticker} key={coin.id}>
+          <div className={classes.ticker}>
             <img src={coin.image} alt={coin.id} className={classes.image} />
             <Typography variant="subtitle2">{coin.symbol}</Typography>
             <span

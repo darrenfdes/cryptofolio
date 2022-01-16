@@ -2,9 +2,6 @@ import React from "react";
 import LocalGasStationIcon from "@material-ui/icons/LocalGasStation";
 import { Box, Container, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { useEffect } from "react";
-import axios from "axios";
-import { useState } from "react";
 import { FaBitcoin, FaEthereum } from "react-icons/fa";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,20 +31,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Statcards = ({ stats }) => {
+const Statcards = ({ stats, gas }) => {
   const classes = useStyles();
-
-  const [gas, setGas] = useState();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const results = await axios.get(
-        "https://ethgasstation.info/api/ethgasAPI.json?"
-      );
-      setGas(results.data);
-    };
-    fetchData();
-  }, []);
 
   return (
     <Container className={classes.container}>

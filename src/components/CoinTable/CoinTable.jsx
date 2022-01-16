@@ -22,6 +22,8 @@ import {
 import Pagination from "@material-ui/lab/Pagination";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -94,6 +96,18 @@ const CoinTable = () => {
     () => getCoinList(currency)
   );
 
+  const [gas, setGas] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const results = await axios.get(
+        "https://ethgasstation.info/api/ethgasAPI.json?"
+      );
+      setGas(results.data);
+    };
+    fetchData();
+  }, []);
+
   //get crypto stats
 
   if (statError) {
@@ -105,14 +119,15 @@ const CoinTable = () => {
   }
 
   const handleSearch = () => {
+    for (let i = 0; i < data?.length; i++) {
+      data[i].number = i + 1;
+    }
     return data?.filter(
       (coin) =>
         coin.name.toLowerCase().includes(search) ||
         coin.symbol.toLowerCase().includes(search)
     );
   };
-
-  let i = 0;
 
   return (
     <Container className={classes.container}>
@@ -139,7 +154,7 @@ const CoinTable = () => {
                   : "green",
             }}
           >
-            {globalStats?.market_cap_change_percentage_24h_usd.toFixed(2)}%
+            {globalStats?.market_cap_change_percentage_24h_usd?.toFixed(2)}%
           </span>{" "}
           increase over the last 24h
         </Typography>
@@ -155,7 +170,7 @@ const CoinTable = () => {
       </span>
       {checked && (
         <span style={{ paddingBottom: "15px", paddingTop: "15px" }}>
-          <Statcards stats={globalStats} />
+          <Statcards stats={globalStats} gas={gas} />
         </span>
       )}
       <TextField
@@ -175,7 +190,13 @@ const CoinTable = () => {
                   <TableCell
                     style={{ fontWeight: "700" }}
                     key={head}
-                    align={head === "#" || head === "Coin" ? "" : "right"}
+                    align={
+                      head === "#" || head === "Coin"
+                        ? head === "Coin"
+                          ? ""
+                          : "center"
+                        : "right"
+                    }
                   >
                     <Typography variant="subtitle1">{head}</Typography>
                   </TableCell>
@@ -207,7 +228,7 @@ const CoinTable = () => {
                           variant="subtitle1"
                           className={classes.rowNumber}
                         >
-                          {++i}
+                          {row?.number}
                         </Typography>
                       </div>
                     </TableCell>
@@ -221,7 +242,7 @@ const CoinTable = () => {
                       >
                         <img
                           src={row?.image}
-                          alt={row.name}
+                          alt={row?.name}
                           height="50"
                           style={{ marginBottom: 10 }}
                         />
@@ -230,7 +251,7 @@ const CoinTable = () => {
                           variant="subtitle1"
                           style={{ paddingLeft: 20 }}
                         >
-                          {row.name}
+                          {row?.name}
                         </Typography>
                         {/* <Typography variant="subtitle1">
                           {row.symbol}
@@ -239,11 +260,11 @@ const CoinTable = () => {
                     </TableCell>
                     <TableCell align="right">
                       <Typography variant="subtitle1">
-                        {currencySymbol}{" "}
+                        {currencySymbol}
                         {currency === "btc"
-                          ? row.current_price.toFixed(6)
+                          ? row?.current_price?.toFixed(6)
                           : getCommaSeperatedNumber(
-                              row.current_price.toFixed(2)
+                              row?.current_price?.toFixed(2)
                             )}
                       </Typography>
                     </TableCell>
@@ -252,27 +273,15 @@ const CoinTable = () => {
                         variant="subtitle1"
                         style={{
                           color: Number(
-                            row.price_change_percentage_1h_in_currency < 0
+                            row?.price_change_percentage_1h_in_currency < 0
                           )
                             ? "red"
                             : "green",
                         }}
                       >
-                        {row.price_change_percentage_1h_in_currency.toFixed(2)}%
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Typography
-                        variant="subtitle1"
-                        style={{
-                          color: Number(
-                            row.price_change_percentage_24h_in_currency < 0
-                          )
-                            ? "red"
-                            : "green",
-                        }}
-                      >
-                        {row.price_change_percentage_24h_in_currency.toFixed(2)}
+                        {row?.price_change_percentage_1h_in_currency?.toFixed(
+                          2
+                        )}
                         %
                       </Typography>
                     </TableCell>
@@ -281,24 +290,45 @@ const CoinTable = () => {
                         variant="subtitle1"
                         style={{
                           color: Number(
-                            row.price_change_percentage_7d_in_currency < 0
+                            row?.price_change_percentage_24h_in_currency < 0
                           )
                             ? "red"
                             : "green",
                         }}
                       >
-                        {row.price_change_percentage_7d_in_currency.toFixed(2)}%
+                        {row?.price_change_percentage_24h_in_currency.toFixed(
+                          2
+                        )}
+                        %
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Typography
+                        variant="subtitle1"
+                        style={{
+                          color: Number(
+                            row?.price_change_percentage_7d_in_currency < 0
+                          )
+                            ? "red"
+                            : "green",
+                        }}
+                      >
+                        {row?.price_change_percentage_7d_in_currency?.toFixed(
+                          2
+                        )}
+                        %
                       </Typography>
                     </TableCell>
                     <TableCell align="right">
                       <Typography variant="subtitle1">
-                        {getCommaSeperatedNumber(row.market_cap)}
+                        {currencySymbol}
+                        {getCommaSeperatedNumber(row?.market_cap)}
                       </Typography>
                     </TableCell>
                     <TableCell align="right">
                       <Typography>
                         {currencySymbol}
-                        {getCommaSeperatedNumber(row.total_volume)}
+                        {getCommaSeperatedNumber(row?.total_volume)}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -308,7 +338,7 @@ const CoinTable = () => {
         )}
       </TableContainer>
       <Pagination
-        count={(handleSearch()?.length / 10).toFixed(0)}
+        count={(handleSearch()?.length / 10)?.toFixed(0)}
         style={{
           padding: 20,
           width: "100%",
