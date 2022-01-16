@@ -4,3 +4,7 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
+a,
+u {
+  text-decoration: none;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Card,
+  CardActionArea,
   CardContent,
   CardMedia,
   CircularProgress,
@@ -46,7 +47,7 @@ const demoImage =
 const Carousel = () => {
   const classes = useStyles();
 
-  const searchTerm = "blockchain technology";
+  const searchTerm = "crypto";
 
   const {
     data: news,
@@ -78,38 +79,39 @@ const Carousel = () => {
   const items = articles?.map((x) => {
     return (
       <Card className={classes.root} key={x.title}>
-        <CardMedia
-          className={classes.media}
-          alt={x.title}
-          image={x.urlToImage ? x.urlToImage : demoImage}
-          title={x.title}
-        />
-        <a
-          href={x?.url}
-          target="_blank"
-          rel="noreferrer"
-          style={{ color: "inherit" }}
-        >
-          <CardContent>
-            <Typography
-              variant="body2"
-              component="p"
-              style={{ color: "white" }}
-            >
-              {x.title}
-            </Typography>
-          </CardContent>
-        </a>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            alt={x.title}
+            image={x?.urlToImage || demoImage}
+            title={x.title}
+          />
+          <a
+            href={x?.url}
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: "inherit" }}
+          >
+            <CardContent>
+              <Typography
+                variant="body2"
+                component="p"
+                style={{ color: "white" }}
+              >
+                {x.title}
+              </Typography>
+            </CardContent>
+          </a>
+        </CardActionArea>
       </Card>
     );
   });
 
   const responsive = {
-    0: {
+    400: {
       items: 2,
     },
-
-    1024: {
+    924: {
       items: 3,
     },
     1200: {

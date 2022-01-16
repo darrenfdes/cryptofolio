@@ -13,6 +13,7 @@ import Brightness4Icon from "@material-ui/icons/Brightness4";
 import Avatar from "@material-ui/core/Avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { currencyActions } from "../redux-store/currency-slice";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -29,6 +30,16 @@ const useStyles = makeStyles((theme) => ({
   },
   badge: {
     marginRight: theme.spacing(2),
+  },
+  news: {
+    paddingRight: theme.spacing(2),
+    cursor: "pointer",
+  },
+  currency: {
+    width: 100,
+    height: 40,
+    paddingRight: theme.spacing(2),
+    color: "white",
   },
 }));
 
@@ -56,20 +67,38 @@ const Navbar = () => {
     );
   };
 
+  let navigate = useNavigate();
+
   return (
     <AppBar position="static">
       <Container>
         <Toolbar className={classes.toolbar}>
-          <Typography variant="h6" className={classes.title}>
+          <Typography
+            variant="h6"
+            className={classes.title}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
             CryptoFolio
           </Typography>
-          <div style={{ display: "flex" }}>
+
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Typography
+              variant="h6"
+              onClick={() => {
+                navigate("/news");
+              }}
+              className={classes.news}
+            >
+              News
+            </Typography>
             <Select
               color="primary"
               variant="outlined"
               labelId="demo-simple-select-label"
               value={currencyStore}
-              style={{ width: 100, height: 40, marginLeft: 15, color: "white" }}
+              className={classes.currency}
               onChange={currencyChangeHandler}
             >
               {currencyList.map((currency) => (

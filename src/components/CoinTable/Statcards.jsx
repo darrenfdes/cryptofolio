@@ -112,7 +112,7 @@ const Statcards = ({ stats, gas }) => {
           style={{ paddingTop: "10px" }}
           variant="h6"
         >
-          {gas?.average / 10}Gwei
+          {gas?.average / 10} Gwei
         </Typography>
         <span
           style={{
@@ -124,7 +124,9 @@ const Statcards = ({ stats, gas }) => {
           }}
         >
           <LocalGasStationIcon fontSize="small" />
-          <Typography variant="subtitle1">ETH Gas</Typography>
+          <Typography variant="subtitle1" noWrap>
+            ETH Gas
+          </Typography>
         </span>
       </Box>
     </Container>
