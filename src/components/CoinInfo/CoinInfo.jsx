@@ -1,9 +1,15 @@
-import { CircularProgress, makeStyles } from "@material-ui/core";
+import {
+  Button,
+  ButtonGroup,
+  CircularProgress,
+  makeStyles,
+} from "@material-ui/core";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getHistoricalCahrtData } from "../../apis/coinGecko";
 import { Line } from "react-chartjs-2";
+import { chartDays } from "./ChartTimePeriods.js";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -47,40 +53,70 @@ const CoinInfo = ({ coin, currency, symbol }) => {
   //   }
   // };
 
-  console.log(historicalData);
-
   return (
     <div className={classes.container}>
       {!historicalData ? (
         <CircularProgress color="secondary" />
       ) : (
-        <Line
-          data={{
-            labels: historicalData.map((coin) => {
-              let date = new Date(coin[0]);
-              let time =
-                date.getHours() > 12
-                  ? `${date.getHours() - 12}:${date.getMinutes()} PM`
-                  : `${date.getHours()}:${date.getMinutes()} AM`;
-              return days === 1 ? time : date.toLocaleDateString();
-            }),
+        <>
+          <Line
+            data={{
+              labels: historicalData.map((coin) => {
+                let date = new Date(coin[0]);
+                let time =
+                  date.getHours() > 12
+                    ? `${date.getHours() - 12}:${date.getMinutes()} PM`
+                    : `${date.getHours()}:${date.getMinutes()} AM`;
+                return days === 1 ? time : date.toLocaleDateString();
+              }),
 
-            datasets: [
-              {
-                data: historicalData.map((coin) => coin[1]),
-                label: `Price ( Past ${days} Days ) in ${currency}`,
-                borderColor: "#3228b8",
+              datasets: [
+                {
+                  data: historicalData.map((coin) => coin[1]),
+                  label: `Price ( Past ${days} Days ) in ${currency}`,
+                  borderColor: "#335cff",
+                },
+              ],
+            }}
+            options={{
+              elements: {
+                point: {
+                  radius: 1,
+                },
               },
-            ],
-          }}
-          options={{
-            elements: {
-              point: {
-                radius: 1,
-              },
-            },
-          }}
-        />
+            }}
+          />
+          <div
+            style={{
+              display: "flex",
+              marginTop: 20,
+              justifyContent: "space-evenly",
+              width: "100%",
+            }}
+          >
+            <ButtonGroup
+              color="primary"
+              aria-label="outlined primary button group"
+            >
+              {chartDays.map((day) => (
+                <Button
+                  key={day}
+                  variant={day.value === days ? "contained" : ""}
+                  onClick={() => setDays(day.value)}
+                >
+                  {day.label}
+                </Button>
+                // <SelectButton
+                //   key={day}
+                //   onClick={() => setDays(day.value)}
+                //   selected={day.value === days}
+                // >
+
+                // </SelectButton>
+              ))}
+            </ButtonGroup>
+          </div>
+        </>
       )}
     </div>
   );
