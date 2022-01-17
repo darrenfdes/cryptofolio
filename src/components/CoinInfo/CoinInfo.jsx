@@ -43,6 +43,7 @@ const CoinInfo = ({ coin, currency, symbol }) => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currency, days]);
 
   // const getChartColor = () => {
@@ -100,19 +101,12 @@ const CoinInfo = ({ coin, currency, symbol }) => {
             >
               {chartDays.map((day) => (
                 <Button
-                  key={day}
+                  key={day.value}
                   variant={day.value === days ? "contained" : ""}
                   onClick={() => setDays(day.value)}
                 >
                   {day.label}
                 </Button>
-                // <SelectButton
-                //   key={day}
-                //   onClick={() => setDays(day.value)}
-                //   selected={day.value === days}
-                // >
-
-                // </SelectButton>
               ))}
             </ButtonGroup>
           </div>

@@ -7,6 +7,7 @@ import Homepage from "./pages/Homepage";
 import Cryptocurrency from "./pages/Cryptocurrency";
 import CryptoDetails from "./pages/CryptoDetails";
 import News from "./pages/News";
+import Footer from "./layout/Footer";
 
 const useStyles = makeStyles((theme) => ({
   app: {
@@ -39,6 +40,7 @@ const App = () => {
           <Route path="/news" element={<News />} />
         </Routes>
       </div>
+      {/* <Footer /> */}
     </div>
   );
 };
