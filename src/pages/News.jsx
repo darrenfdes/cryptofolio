@@ -50,21 +50,6 @@ const News = () => {
     () => getCoinList(currency)
   );
 
-  if (isLoading) {
-    return (
-      <span
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%",
-        }}
-      >
-        <CircularProgress />
-      </span>
-    );
-  }
-
   if (CoinLoading) {
     return "Fetching Coins ...";
   }
@@ -89,6 +74,8 @@ const News = () => {
           )}
         />
       </Grid>
+
+      {isLoading && <CircularProgress color="secondary" />}
       {news?.articles.map((news, i) => (
         <Grid item key={i}>
           <Card className={classes.newsCard}>

@@ -19,3 +19,8 @@ export const getTrendingCoins = (currency = "usd") =>
     .then((res) => res.data);
 
 export const getCryptoStats = () => api.get("/global");
+
+export const getCoinData = (id) => api.get(`/coins/${id}`);
+
+export const getHistoricalCahrtData = (id, days = 365, currency) =>
+  api.get(`/coins/${id}/market_chart?vs_currency=${currency}&days=${days}`);
