@@ -10,10 +10,10 @@ import {
 } from "@material-ui/core";
 import Notification from "@material-ui/icons/Notifications";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
-import Avatar from "@material-ui/core/Avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { currencyActions } from "../redux-store/currency-slice";
 import { useNavigate } from "react-router-dom";
+import AuthModal from "../components/Authentication/AuthModal";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -108,6 +108,7 @@ const Navbar = () => {
               ))}
             </Select>
             <div className={classes.icons}>
+              <AuthModal />
               <Badge
                 badgeContent={4}
                 color="secondary"
@@ -118,7 +119,6 @@ const Navbar = () => {
               <Badge className={classes.badge}>
                 <Brightness4Icon />
               </Badge>
-              <Avatar alt="No Name" src="/static/images/avatar/2.jpg" />
             </div>
           </div>
         </Toolbar>

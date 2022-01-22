@@ -193,7 +193,7 @@ const CoinTable = () => {
                     align={
                       head === "#" || head === "Coin"
                         ? head === "Coin"
-                          ? ""
+                          ? "inherit"
                           : "center"
                         : "right"
                     }

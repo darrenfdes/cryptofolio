@@ -35,16 +35,15 @@ const CoinInfo = ({ coin, currency, symbol }) => {
 
   const [days, setDays] = useState(1);
 
-  const fetchData = async () => {
-    const { data } = await getHistoricalCahrtData(coin.id, days, currency);
-
-    setHistoricalData(data.prices);
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await getHistoricalCahrtData(coin.id, days, currency);
+
+      setHistoricalData(data.prices);
+    };
+
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currency, days]);
+  }, [coin.id, currency, days]);
 
   // const getChartColor = () => {
   //   if (historicalData[0][1] > historicalData[-1][1]) {

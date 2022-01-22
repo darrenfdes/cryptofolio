@@ -7,6 +7,8 @@ import Homepage from "./pages/Homepage";
 import Cryptocurrency from "./pages/Cryptocurrency";
 import CryptoDetails from "./pages/CryptoDetails";
 import News from "./pages/News";
+import Notification from "./components/Alert/Notification";
+
 // import Footer from "./layout/Footer";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
   const classes = useStyles();
+
   console.log("re-render *app.jsx*");
   return (
     <div className={classes.app}>
@@ -40,6 +43,7 @@ const App = () => {
           <Route path="/news" element={<News />} />
         </Routes>
       </div>
+      <Notification />
       {/* <Footer /> */}
     </div>
   );
