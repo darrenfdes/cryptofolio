@@ -1,11 +1,8 @@
 import React from "react";
+import CoinTable from "../components/CoinTable/CoinTable";
 
 const Cryptocurrency = () => {
-  return (
-    <div>
-      <h1>Cryptocurrency list</h1>
-    </div>
-  );
+  return <CoinTable />;
 };
 
 export default Cryptocurrency;

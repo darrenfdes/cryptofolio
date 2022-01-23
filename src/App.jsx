@@ -9,8 +9,6 @@ import CryptoDetails from "./pages/CryptoDetails";
 import News from "./pages/News";
 import Notification from "./components/Alert/Notification";
 
-// import Footer from "./layout/Footer";
-
 const useStyles = makeStyles((theme) => ({
   app: {
     display: "flex",
@@ -20,12 +18,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     left: 0,
   },
-
-  // main: {
-  //   [theme.breakpoints.down("sm")]: {
-  //     paddingLeft: "74px",
-  //   },
-  // },
 }));
 
 const App = () => {

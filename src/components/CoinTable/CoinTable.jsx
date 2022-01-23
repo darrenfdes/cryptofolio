@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     marginTop: theme.spacing(2),
-    color: "#555555",
+    color: theme.palette.text.primary,
   },
   textField: {
     marginBottom: 20,
@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "#f7f7f7",
     },
+  },
+  stats: {
+    color: theme.palette.text.secondary,
   },
 }));
 
@@ -143,7 +146,8 @@ const CoinTable = () => {
       >
         <Typography
           varaint="subtitle2"
-          style={{ color: "#82817d", paddingBottom: "2px" }}
+          className={classes.stats}
+          style={{ paddingBottom: "2px" }}
         >
           The global cryptocurrency market cap had a{" "}
           <span
@@ -164,7 +168,7 @@ const CoinTable = () => {
           checked={checked}
           onChange={() => setChecked((prev) => !prev)}
         />
-        <Typography variant="subtitle2" style={{ color: "#555555" }}>
+        <Typography variant="subtitle2" className={classes.stats}>
           Show Stats
         </Typography>
       </span>

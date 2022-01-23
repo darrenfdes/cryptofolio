@@ -3,12 +3,18 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getCoinData } from "../apis/coinGecko";
 import { useQuery } from "react-query";
-import { LinearProgress, makeStyles, Typography } from "@material-ui/core";
+import {
+  Button,
+  LinearProgress,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import CoinInfo from "../components/CoinInfo/CoinInfo";
 import parse from "html-react-parser";
 import { getCommaSeperatedNumber } from "../components/CoinTable/CoinTable";
-
+import { useAuthState } from "react-firebase-hooks/auth";
 import millify from "millify";
+import { auth } from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -63,6 +69,10 @@ const useStyles = makeStyles((theme) => ({
       alignItems: "start",
     },
   },
+  watchList: {
+    width: "100%",
+    height: 40,
+  },
 }));
 
 const CryptoDetails = () => {
@@ -77,6 +87,8 @@ const CryptoDetails = () => {
       enabled: Boolean(id),
     }
   );
+
+  const [user] = useAuthState(auth);
 
   if (isLoading) {
     return <LinearProgress color="secondary" />;
@@ -131,6 +143,15 @@ const CryptoDetails = () => {
               })}
             </Typography>
           </span>
+          {user && (
+            <Button
+              color="secondary"
+              variant="contained"
+              className={classes.watchList}
+            >
+              Add to portfolio
+            </Button>
+          )}
         </div>
       </div>
       <CoinInfo

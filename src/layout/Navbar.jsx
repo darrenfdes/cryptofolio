@@ -7,9 +7,12 @@ import {
   Select,
   Toolbar,
   Typography,
+  IconButton,
+  Tooltip,
 } from "@material-ui/core";
 // import Notification from "@material-ui/icons/Notifications";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
+import Brightness7Icon from "@material-ui/icons/Brightness7";
 import { useDispatch, useSelector } from "react-redux";
 import { currencyActions } from "../redux-store/currency-slice";
 import { useNavigate } from "react-router-dom";
@@ -44,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
     height: 40,
     paddingRight: theme.spacing(2),
     color: "white",
+  },
+  toggle: {
+    color: theme.palette.text.primary,
   },
 }));
 
@@ -109,6 +115,7 @@ const Navbar = () => {
             >
               News
             </Typography>
+
             <Select
               color="primary"
               variant="outlined"
@@ -134,7 +141,11 @@ const Navbar = () => {
                 <Notification />
               </Badge> */}
               <Badge className={classes.badge}>
-                <Brightness4Icon />
+                <Tooltip title="toggle light/dark theme">
+                  <IconButton className={classes.toggle}>
+                    <Brightness4Icon style={{ color: "white" }} />
+                  </IconButton>
+                </Tooltip>
               </Badge>
             </div>
           </div>
