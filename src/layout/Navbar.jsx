@@ -8,12 +8,16 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import Notification from "@material-ui/icons/Notifications";
+// import Notification from "@material-ui/icons/Notifications";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
 import { useDispatch, useSelector } from "react-redux";
 import { currencyActions } from "../redux-store/currency-slice";
 import { useNavigate } from "react-router-dom";
 import AuthModal from "../components/Authentication/AuthModal";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase";
+import UserMenu from "../components/Authentication/UserMenu";
+import { alertActions } from "../redux-store/alert-slice";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -57,6 +61,8 @@ const Navbar = () => {
 
   const currencyStore = useSelector((state) => state.currency.value);
 
+  const [user, loading, error] = useAuthState(auth);
+
   const currencyChangeHandler = (e) => {
     const currency = e.target.value;
     dispatch(
@@ -66,6 +72,16 @@ const Navbar = () => {
       })
     );
   };
+
+  if (error) {
+    dispatch(
+      alertActions.setAlert({
+        open: true,
+        message: error.message,
+        type: "error",
+      })
+    );
+  }
 
   let navigate = useNavigate();
 
@@ -108,14 +124,15 @@ const Navbar = () => {
               ))}
             </Select>
             <div className={classes.icons}>
-              <AuthModal />
-              <Badge
+              {!loading && <>{user ? <UserMenu /> : <AuthModal />}</>}
+
+              {/* <Badge
                 badgeContent={4}
                 color="secondary"
                 className={classes.badge}
               >
                 <Notification />
-              </Badge>
+              </Badge> */}
               <Badge className={classes.badge}>
                 <Brightness4Icon />
               </Badge>

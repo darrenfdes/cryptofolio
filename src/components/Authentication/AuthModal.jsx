@@ -3,9 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import { AppBar, Button, Tab, Tabs } from "@material-ui/core";
+import { AppBar, Box, Button, Tab, Tabs, Typography } from "@material-ui/core";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import GoogleButton from "react-google-button";
+import { auth } from "../../firebase";
+import { alertActions } from "../../redux-store/alert-slice";
+import { useDispatch } from "react-redux";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -26,6 +31,15 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "transparent",
     color: "black", //change to white on theme switch
   },
+  google: {
+    padding: theme.spacing(2),
+    paddingTop: 0,
+    display: "flex",
+    flexDirection: "column",
+    textAlign: "center",
+    gap: 20,
+    fontSize: 20,
+  },
 }));
 
 export default function AuthModal() {
@@ -33,6 +47,9 @@ export default function AuthModal() {
   const [open, setOpen] = React.useState(false);
 
   const [value, setValue] = React.useState(0);
+
+  const dispatch = useDispatch();
+  // const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -44,6 +61,32 @@ export default function AuthModal() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const googleProvider = new GoogleAuthProvider();
+
+  const signInWithGoogleHandler = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((res) => {
+        dispatch(
+          alertActions.setAlert({
+            open: true,
+            message: "Sign in with google succesful!",
+            type: "success",
+          })
+        );
+        handleClose();
+      })
+      .catch((error) => {
+        dispatch(
+          alertActions.setAlert({
+            open: true,
+            message: error.message,
+            type: "error",
+          })
+        );
+        return;
+      });
   };
 
   return (
@@ -88,6 +131,13 @@ export default function AuthModal() {
             </AppBar>
             {value === 0 && <Login handleClose={handleClose} />}
             {value === 1 && <SignUp handleClose={handleClose} />}
+            <Box className={classes.google}>
+              <Typography>OR</Typography>
+              <GoogleButton
+                style={{ width: "100%" }}
+                onClick={signInWithGoogleHandler}
+              />
+            </Box>
           </div>
         </Fade>
       </Modal>

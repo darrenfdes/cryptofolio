@@ -18,12 +18,10 @@ const Notification = () => {
       alertActions.setAlert({
         open: false,
         message: alertMessage,
-        type: "error",
+        type: alertType,
       })
     );
   };
-
-  console.log(alertMessage);
 
   return (
     <Snackbar open={isOpen} autoHideDuration={3000} onClose={handleClose}>

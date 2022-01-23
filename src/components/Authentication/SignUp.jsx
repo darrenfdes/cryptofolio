@@ -9,12 +9,15 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import useInput from "../../hooks/use-input";
 import { alertActions } from "../../redux-store/alert-slice";
+import { createUserWithEmailAndPassword } from "@firebase/auth";
+import { auth } from "../../firebase";
 
-const SignUp = () => {
+const SignUp = ({ handleClose }) => {
   const dispatch = useDispatch();
 
   const {
     value: email,
+    valueIsValid: emailIsValid,
     hasError: emailInputHasError,
     valueChangeHandler: emailChangedHandler,
     inputBlurHandler: emailBlurHandler,
@@ -30,10 +33,11 @@ const SignUp = () => {
   const {
     value: password,
     hasError: passwordInputHasError,
+    valueIsValid: passwordIsValid,
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: resetPassword,
-  } = useInput((value) => value?.trim() !== "");
+  } = useInput((value) => value?.trim().length >= 6);
 
   const {
     value: confirmPassword,
@@ -43,12 +47,35 @@ const SignUp = () => {
     reset: resetConfirmPassword,
   } = useInput((value) => value?.trim() === password);
 
-  const handleSubmit = (e) => {
-    resetEmail();
-    resetPassword();
-    resetConfirmPassword();
-
-    if (password !== confirmPassword) {
+  const handleSubmit = async () => {
+    if (!passwordIsValid || !emailIsValid) {
+      dispatch(
+        alertActions.setAlert({
+          open: true,
+          message: "Please enter email and password ",
+          type: "error",
+        })
+      );
+      return;
+    } else if (!emailIsValid) {
+      dispatch(
+        alertActions.setAlert({
+          open: true,
+          message: "Please Enter a valid email :(",
+          type: "error",
+        })
+      );
+      return;
+    } else if (!passwordIsValid) {
+      dispatch(
+        alertActions.setAlert({
+          open: true,
+          message: "Please enter password :(",
+          type: "error",
+        })
+      );
+      return;
+    } else if (password !== confirmPassword) {
       dispatch(
         alertActions.setAlert({
           open: true,
@@ -56,7 +83,39 @@ const SignUp = () => {
           type: "error",
         })
       );
+      return;
     }
+
+    try {
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      dispatch(
+        alertActions.setAlert({
+          open: true,
+          message: `Sign Up Successful for ${result.user.email}!`,
+          type: "success",
+          user: result.user,
+        })
+      );
+
+      handleClose();
+    } catch (error) {
+      dispatch(
+        alertActions.setAlert({
+          open: true,
+          message: error.message,
+          type: "error",
+        })
+      );
+    }
+
+    resetEmail();
+    resetPassword();
+    resetConfirmPassword();
 
     return;
   };
@@ -96,7 +155,7 @@ const SignUp = () => {
         />
         {passwordInputHasError && (
           <FormHelperText style={{ color: "red", paddingLeft: 2 }}>
-            Please enter a password
+            Please enter a password with more than 6 characters
           </FormHelperText>
         )}
       </FormControl>

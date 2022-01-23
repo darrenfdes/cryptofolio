@@ -7,11 +7,17 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import useInput from "../../hooks/use-input";
+import { useDispatch } from "react-redux";
+import { alertActions } from "../../redux-store/alert-slice";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 
-const Login = () => {
+const Login = ({ handleClose }) => {
+  const dispatch = useDispatch();
   const {
     value: email,
     hasError: emailInputHasError,
+    valueIsValid: emailIsValid,
     valueChangeHandler: emailChangedHandler,
     inputBlurHandler: emailBlurHandler,
     reset: resetEmail,
@@ -26,12 +32,63 @@ const Login = () => {
   const {
     value: password,
     hasError: passwordInputHasError,
+    valueIsValid: passwordIsValid,
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: resetPassword,
   } = useInput((value) => value?.trim() !== "");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async () => {
+    if (!passwordIsValid || !emailIsValid) {
+      dispatch(
+        alertActions.setAlert({
+          open: true,
+          message: "Please enter email and password ",
+          type: "error",
+        })
+      );
+      return;
+    } else if (!emailIsValid) {
+      dispatch(
+        alertActions.setAlert({
+          open: true,
+          message: "Please Enter a valid email :(",
+          type: "error",
+        })
+      );
+      return;
+    } else if (!passwordIsValid) {
+      dispatch(
+        alertActions.setAlert({
+          open: true,
+          message: "Password Should be more than 5 characters",
+          type: "error",
+        })
+      );
+      return;
+    }
+
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+
+      dispatch(
+        alertActions.setAlert({
+          open: true,
+          message: `Login Successful for ${result.user.email}!`,
+          type: "success",
+        })
+      );
+      handleClose();
+    } catch (error) {
+      dispatch(
+        alertActions.setAlert({
+          open: true,
+          message: error.message,
+          type: "error",
+        })
+      );
+    }
+
     resetEmail();
     resetPassword();
   };
