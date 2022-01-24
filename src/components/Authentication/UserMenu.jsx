@@ -33,8 +33,6 @@ const UserMenu = () => {
 
   const [user, error] = useAuthState(auth);
 
-  console.log(user);
-
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 

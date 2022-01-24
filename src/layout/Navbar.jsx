@@ -109,6 +109,15 @@ const Navbar = () => {
             <Typography
               variant="h6"
               onClick={() => {
+                navigate("/crypto");
+              }}
+              className={classes.news}
+            >
+              Coins
+            </Typography>
+            <Typography
+              variant="h6"
+              onClick={() => {
                 navigate("/news");
               }}
               className={classes.news}
