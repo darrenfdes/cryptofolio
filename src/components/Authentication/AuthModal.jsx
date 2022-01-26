@@ -13,6 +13,15 @@ import { useDispatch } from "react-redux";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const useStyles = makeStyles((theme) => ({
+  login: {
+    width: 85,
+    height: 40,
+    backgroundColor: "#09064f",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#070469",
+    },
+  },
   container: {
     margin: theme.spacing(1),
   },
@@ -93,12 +102,8 @@ export default function AuthModal() {
     <div className={classes.container}>
       <Button
         variant="contained"
-        color="primary"
-        style={{
-          width: 85,
-          height: 40,
-        }}
         onClick={handleOpen}
+        className={classes.login}
       >
         Login
       </Button>

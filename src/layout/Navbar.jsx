@@ -23,6 +23,10 @@ import UserMenu from "../components/Authentication/UserMenu";
 import { alertActions } from "../redux-store/alert-slice";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    color: "white",
+    backgroundColor: "#070542",
+  },
   toolbar: {
     display: "flex",
     justifyContent: "space-between",
@@ -92,7 +96,7 @@ const Navbar = () => {
   let navigate = useNavigate();
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={classes.root}>
       <Container>
         <Toolbar className={classes.toolbar}>
           <Typography
