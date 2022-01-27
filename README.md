@@ -6,9 +6,10 @@ https://epic-albattani-40a857.netlify.app/
 
 
 
-![image](https://user-images.githubusercontent.com/46609190/150738296-15216d25-a44d-4871-b11d-b97d40c680f9.png)
+![image](https://user-images.githubusercontent.com/46609190/151317565-e33f7fda-6f66-45f1-8ebe-0e06584b4504.png)
 
-![image](https://user-images.githubusercontent.com/46609190/150738453-070c1109-be83-4f3a-a791-19cdda8dd8dc.png)
+
+![image](https://user-images.githubusercontent.com/46609190/151317696-0374881b-7ccd-465b-ae4a-fda17cd7bc96.png)
 
 
 
