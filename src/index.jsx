@@ -10,6 +10,8 @@ import store from "./redux-store/index";
 // import { ReactQueryDevtools } from "react-query/devtools";
 import "react-alice-carousel/lib/alice-carousel.css";
 // import { ThemeProvider } from "@material-ui/core";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const queryClient = new QueryClient();
 
