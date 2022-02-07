@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
     [theme.breakpoints.down("md")]: {
-      maxWidth: 200,
+      maxWidth: 220,
     },
 
     backgroundColor: "#07124d",

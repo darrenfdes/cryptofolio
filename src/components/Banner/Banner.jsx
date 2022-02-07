@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles, Paper } from "@material-ui/core";
 import bannerImg from "../../assets/5040007.jpg";
-import Carousel from "./Carousel";
+// import Carousel from "./Carousel";
 import SlickCarousel from "./SlickCarousel";
 
 const useStyles = makeStyles(() => ({
