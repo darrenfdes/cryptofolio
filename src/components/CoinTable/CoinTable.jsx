@@ -50,7 +50,8 @@ const useStyles = makeStyles((theme) => ({
   row: {
     cursor: "pointer",
     "&:hover": {
-      backgroundColor: "#f7f7f7",
+      // backgroundColor: "#f7f7f7",
+      backgroundColor: ({ mode }) => (!mode ? "#f7f7f7" : "#3b3b3b"),
     },
   },
   stats: {
@@ -73,10 +74,17 @@ export const getCommaSeperatedNumber = (x) =>
   x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 const CoinTable = () => {
-  const classes = useStyles();
   const currencyStore = useSelector((state) => state.currency.value);
   const currencySymbol = useSelector((state) => state.currency.symbol);
   const currency = currencyStore.toLowerCase();
+
+  const uiStore = useSelector((state) => state.ui.colorMode);
+
+  const props = {
+    mode: uiStore,
+  };
+
+  const classes = useStyles(props);
 
   const [page, setPage] = useState(1);
 

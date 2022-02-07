@@ -19,6 +19,9 @@ import parse from "html-react-parser";
 import { getCoinList } from "../apis/coinGecko";
 
 const useStyles = makeStyles((theme) => ({
+  page: {
+    height: "100%",
+  },
   newsCard: {
     maxWidth: 345,
   },
@@ -31,6 +34,15 @@ const useStyles = makeStyles((theme) => ({
   },
   search: {
     paddingTop: theme.spacing(3),
+  },
+  media: {
+    height: 160,
+    [theme.breakpoints.down("md")]: {
+      height: 120,
+    },
+  },
+  info: {
+    maxHeight: 260,
   },
 }));
 
@@ -59,65 +71,76 @@ const News = () => {
   }
 
   return (
-    <Grid spacing={5} container justifyContent="center" alignItems="center">
-      <Grid item xs={12} style={{ display: "flex", justifyContent: "center" }}>
-        <Autocomplete
-          onChange={(event, newValue) => {
-            setSearch(newValue.id);
-          }}
-          className={classes.search}
-          options={data}
-          getOptionLabel={(data) => data.name}
-          style={{ width: 300 }}
-          renderInput={(params) => (
-            <TextField {...params} label="Select a Crypto" variant="outlined" />
-          )}
-        />
-      </Grid>
-
-      {isLoading && <CircularProgress color="secondary" />}
-      {news?.articles.map((news, i) => (
-        <Grid item key={i}>
-          <Card className={classes.newsCard}>
-            <a href={news?.url} target="_blank" rel="noreferrer">
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  alt={news?.title}
-                  image={news?.urlToImage}
-                />
-                <CardContent>
-                  <Typography
-                    gutterBottom
-                    variant="h6"
-                    component="h2"
-                    color="primary"
-                  >
-                    {news?.title}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    {news?.description > 100
-                      ? parse(`${news.description.substring(0, 100)}...`)
-                      : parse(news.description)}
-                  </Typography>
-                </CardContent>
-
-                <div className={classes.provider}>
-                  <Typography variant="body2">{news?.source.name}</Typography>
-                  <Typography variant="body2">
-                    {moment(news.publishedAt).startOf("ss").fromNow()}
-                  </Typography>
-                </div>
-              </CardActionArea>
-            </a>
-          </Card>
+    <div className={classes.page}>
+      <Grid spacing={5} container justifyContent="center" alignItems="center">
+        <Grid
+          item
+          xs={12}
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <Autocomplete
+            onChange={(event, newValue) => {
+              setSearch(newValue.id);
+            }}
+            className={classes.search}
+            options={data}
+            getOptionLabel={(data) => data.name}
+            style={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Select a Crypto"
+                variant="outlined"
+              />
+            )}
+          />
         </Grid>
-      ))}
-    </Grid>
+
+        {isLoading && <CircularProgress color="secondary" />}
+        {news?.articles.map((news, i) => (
+          <Grid item key={i}>
+            <Card className={classes.newsCard}>
+              <a href={news?.url} target="_blank" rel="noreferrer">
+                <CardActionArea>
+                  <CardMedia
+                    className={classes.media}
+                    component="img"
+                    alt={news?.title}
+                    image={news?.urlToImage}
+                  />
+                  <CardContent className={classes.info}>
+                    <Typography
+                      gutterBottom
+                      variant="h6"
+                      component="h2"
+                      color="primary"
+                    >
+                      {news?.title}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      {news?.description > 80
+                        ? parse(`${news.description.substring(0, 80)}...`)
+                        : parse(news.description)}
+                    </Typography>
+                  </CardContent>
+
+                  <div className={classes.provider}>
+                    <Typography variant="body2">{news?.source.name}</Typography>
+                    <Typography variant="body2">
+                      {moment(news.publishedAt).startOf("ss").fromNow()}
+                    </Typography>
+                  </div>
+                </CardActionArea>
+              </a>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </div>
   );
 };
 

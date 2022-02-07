@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const uiSlice = createSlice({
   name: "ui",
-  initialState: { cartIsVisible: false, notification: null },
+  initialState: { colorMode: false, notification: null },
   reducers: {
     showNotification(state, action) {
       state.notification = {
@@ -10,6 +10,9 @@ const uiSlice = createSlice({
         title: action.payload.title,
         message: action.payload.message,
       };
+    },
+    toggleDarkMode(state, action) {
+      state.colorMode = !state.colorMode;
     },
   },
 });

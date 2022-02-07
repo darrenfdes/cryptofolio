@@ -15,6 +15,7 @@ import Brightness4Icon from "@material-ui/icons/Brightness4";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import { useDispatch, useSelector } from "react-redux";
 import { currencyActions } from "../redux-store/currency-slice";
+import { uiActions } from "../redux-store/ui-slice";
 import { useNavigate } from "react-router-dom";
 import AuthModal from "../components/Authentication/AuthModal";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -71,6 +72,8 @@ const Navbar = () => {
 
   const currencyStore = useSelector((state) => state.currency.value);
 
+  const uiStore = useSelector((state) => state.ui.colorMode);
+
   const [user, loading, error] = useAuthState(auth);
 
   const currencyChangeHandler = (e) => {
@@ -81,6 +84,10 @@ const Navbar = () => {
         symbol: currencySymbols[currency],
       })
     );
+  };
+
+  const darkModeSwitchHandler = () => {
+    dispatch(uiActions.toggleDarkMode());
   };
 
   if (error) {
@@ -94,6 +101,12 @@ const Navbar = () => {
   }
 
   let navigate = useNavigate();
+
+  let Icon = !uiStore ? (
+    <Brightness7Icon style={{ color: "white" }} />
+  ) : (
+    <Brightness4Icon style={{ color: "white" }} />
+  );
 
   return (
     <AppBar position="static" className={classes.root}>
@@ -155,8 +168,11 @@ const Navbar = () => {
               </Badge> */}
               <Badge className={classes.badge}>
                 <Tooltip title="toggle light/dark theme">
-                  <IconButton className={classes.toggle}>
-                    <Brightness4Icon style={{ color: "white" }} />
+                  <IconButton
+                    className={classes.toggle}
+                    onClick={darkModeSwitchHandler}
+                  >
+                    {Icon}
                   </IconButton>
                 </Tooltip>
               </Badge>

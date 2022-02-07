@@ -49,9 +49,14 @@ const useStyles = makeStyles((theme) => ({
     gap: 20,
     fontSize: 20,
   },
+  tabs: {
+    borderRadius: 10,
+  },
 }));
 
 export default function AuthModal() {
+  // const uiStore = useSelector((state) => state.ui.colorMode);
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -105,7 +110,7 @@ export default function AuthModal() {
         onClick={handleOpen}
         className={classes.login}
       >
-        Login
+        <Typography>Login</Typography>
       </Button>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -126,9 +131,8 @@ export default function AuthModal() {
                 value={value}
                 onChange={handleChange}
                 variant="fullWidth"
-                style={{
-                  borderRadius: 10,
-                }}
+                textColor="primary"
+                className={classes.tabs}
               >
                 <Tab label="Login" />
                 <Tab label="Sign Up" />

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 10,
     justifyContent: "center",
     alignItems: "center",
-    color: "#706e6e",
+    // color: "#706e6e",
     // [theme.breakpoints.down("sm")]: {
     //   width: "6rem",
     //   height: "3rem",
@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "space-between",
     paddingTop: "10px",
+  },
+  stats: {
+    color: theme.palette.text.secondary,
   },
 }));
 
@@ -47,7 +50,9 @@ const Statcards = ({ stats, gas }) => {
             <Typography color="primary" variant="h6">
               {stats?.active_cryptocurrencies}
             </Typography>
-            <Typography variant="subtitle2"># of Coins</Typography>
+            <Typography variant="subtitle2" className={classes.stats}>
+              # of Coins
+            </Typography>
           </span>
         </Box>
       </Grid>
@@ -58,7 +63,9 @@ const Statcards = ({ stats, gas }) => {
             <Typography color="primary" variant="h6">
               {stats?.markets}
             </Typography>
-            <Typography variant="subtitle2"># of Markets</Typography>
+            <Typography variant="subtitle2" className={classes.stats}>
+              # of Markets
+            </Typography>
           </span>
         </Box>
       </Grid>
@@ -68,7 +75,9 @@ const Statcards = ({ stats, gas }) => {
             <Typography color="primary" variant="h6">
               {stats?.ongoing_icos}
             </Typography>
-            <Typography variant="subtitle2">Ongoing ICOs</Typography>
+            <Typography variant="subtitle2" className={classes.stats}>
+              Ongoing ICOs
+            </Typography>
           </span>
         </Box>
       </Grid>
@@ -93,7 +102,9 @@ const Statcards = ({ stats, gas }) => {
             </Typography>
           </span>
 
-          <Typography variant="subtitle2">Dominance</Typography>
+          <Typography variant="subtitle2" className={classes.stats}>
+            Dominance
+          </Typography>
         </Box>
       </Grid>
       <Grid item>
@@ -117,33 +128,33 @@ const Statcards = ({ stats, gas }) => {
             </Typography>
           </span>
 
-          <Typography variant="subtitle2">Dominance</Typography>
+          <Typography variant="subtitle2" className={classes.stats}>
+            Dominance
+          </Typography>
         </Box>
       </Grid>
       <Grid item>
         <Box boxShadow={3} bgcolor="background.paper" className={classes.card}>
           <Typography
             color="primary"
-            gutterBottom
             style={{ paddingTop: "10px" }}
             variant="h6"
           >
             {gas?.average / 10} Gwei
           </Typography>
-          <span
+          <div
             style={{
               display: "flex",
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              color: "#706e6e",
             }}
           >
             <LocalGasStationIcon fontSize="small" />
-            <Typography variant="subtitle1" noWrap>
+            <Typography variant="subtitle2" className={classes.stats} noWrap>
               ETH Gas
             </Typography>
-          </span>
+          </div>
         </Box>
       </Grid>
     </Grid>

@@ -61,9 +61,7 @@ const SlickCarousel = () => {
 
   const [width] = useWindowSize();
 
-  console.log(width);
-
-  let numberOfCards = width > 1020 ? 5 : width > 684 ? 4 : 2;
+  let numberOfCards = width > 1700 ? 5 : width > 684 ? 4 : 2;
 
   const settings = {
     dots: false,
