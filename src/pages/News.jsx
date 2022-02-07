@@ -57,16 +57,21 @@ const News = () => {
   } = useQuery(["news", search], () => fetchNews(search));
 
   const currency = "usd";
-  const { data, isLoading: CoinLoading } = useQuery(
-    ["coinList", currency],
-    () => getCoinList(currency)
-  );
+  const {
+    data,
+    isError: coinError,
+    isLoading: CoinLoading,
+  } = useQuery(["coinList", currency], () => getCoinList(currency));
 
   if (CoinLoading) {
     return "Fetching Coins ...";
   }
 
   if (isError) {
+    return error.message();
+  }
+
+  if (coinError) {
     return error.message();
   }
 
@@ -84,7 +89,7 @@ const News = () => {
             }}
             className={classes.search}
             options={data}
-            getOptionLabel={(data) => data.name}
+            getOptionLabel={(data) => data?.name}
             style={{ width: 300 }}
             renderInput={(params) => (
               <TextField
