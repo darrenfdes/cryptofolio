@@ -14,7 +14,7 @@ import { chartDays } from "./ChartTimePeriods.js";
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "75%",
-    height: "100vh",
+    height: "95vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

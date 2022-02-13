@@ -68,7 +68,7 @@ const News = () => {
   }
 
   if (isError) {
-    return error.message();
+    return error.message() + "free news Api disabled is production";
   }
 
   if (coinError) {
@@ -128,15 +128,15 @@ const News = () => {
                       component="p"
                     >
                       {news?.description > 80
-                        ? parse(`${news.description.substring(0, 80)}...`)
-                        : parse(news.description)}
+                        ? parse(`${news?.description.substring(0, 80)}...`)
+                        : parse(news?.description)}
                     </Typography>
                   </CardContent>
 
                   <div className={classes.provider}>
                     <Typography variant="body2">{news?.source.name}</Typography>
                     <Typography variant="body2">
-                      {moment(news.publishedAt).startOf("ss").fromNow()}
+                      {moment(news?.publishedAt).startOf("ss").fromNow()}
                     </Typography>
                   </div>
                 </CardActionArea>
